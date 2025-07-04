@@ -1,3 +1,6 @@
+## Config
+rename .env.example to .env
+
 ## Run Locally
 docker-compose up --build
 

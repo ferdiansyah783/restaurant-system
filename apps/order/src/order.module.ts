@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { OrderController } from './order.controller';
-import { OrderService } from './order.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Menu } from '../../../libs/common/src/entities/menu.entity';
 import { Order } from '../../../libs/common/src/entities/order.entity';
+import { OrderController } from './order.controller';
+import { OrderService } from './order.service';
+import { MenuSeederService } from './seeder/menu.seeder';
 
 @Module({
   imports: [
@@ -21,17 +22,32 @@ import { Order } from '../../../libs/common/src/entities/order.entity';
     TypeOrmModule.forFeature([Order, Menu]),
     ClientsModule.register([
       {
-        name: 'RMQ_SERVICE',
+        name: 'KITCHEN_SERVICE',
         transport: Transport.RMQ,
         options: {
           urls: ['amqp://rabbitmq:5672'],
-          queue: 'orders',
+          exchange: 'orders',
+          exchangeType: 'fanout',
+          routingKey: 'order.*',
+          queue: 'kitchen_queue',
+          queueOptions: { durable: false },
+        },
+      },
+      {
+        name: 'NOTIFICATION_SERVICE',
+        transport: Transport.RMQ,
+        options: {
+          urls: ['amqp://rabbitmq:5672'],
+          exchange: 'orders',
+          exchangeType: 'fanout',
+          routingKey: 'order.*',
+          queue: 'notification_queue',
           queueOptions: { durable: false },
         },
       },
     ]),
   ],
   controllers: [OrderController],
-  providers: [OrderService],
+  providers: [OrderService, MenuSeederService],
 })
 export class OrderModule {}

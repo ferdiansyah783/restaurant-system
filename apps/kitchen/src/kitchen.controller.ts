@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { KitchenService } from './kitchen.service';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller()
 export class KitchenController {
@@ -8,6 +8,7 @@ export class KitchenController {
 
   @MessagePattern('order.process')
   async handleOrder(@Payload() data: any) {
+    console.log('Kitchen received order');
     await this.kitchenService.handleOrder(data);
   }
 }

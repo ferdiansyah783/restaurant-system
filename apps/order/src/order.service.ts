@@ -13,7 +13,8 @@ export class OrderService {
     private orderRepository: Repository<Order>,
     @InjectRepository(Menu)
     private menuRepository: Repository<Menu>,
-    @Inject('RMQ_SERVICE') private readonly client: ClientProxy
+    @Inject('KITCHEN_SERVICE') private readonly kitchenService: ClientProxy,
+    @Inject('NOTIFICATION_SERVICE') private readonly notificationService: ClientProxy
   ) {}
 
   async getMenu() {
@@ -25,8 +26,8 @@ export class OrderService {
     const saved = await this.orderRepository.save(order);
 
     // Fan-out manually: emit to 2 topics
-    this.client.emit('order.process', saved);
-    this.client.emit('order.confirmation', saved);
+    this.kitchenService.emit('order.process', saved);
+    this.notificationService.emit('order.confirmation', saved);
 
     return { orderId: saved.id };
   }

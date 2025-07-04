@@ -7,7 +7,10 @@ async function bootstrap() {
     transport: Transport.RMQ,
     options: {
       urls: ['amqp://rabbitmq:5672'],
-      queue: 'order.confirmation',
+      exchange: 'orders',
+      exchangeType: 'fanout',
+      routingKey: 'order.confirmation',
+      queue: 'notification_queue',
       queueOptions: { durable: false },
     },
   });

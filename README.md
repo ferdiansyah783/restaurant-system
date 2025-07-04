@@ -93,12 +93,7 @@ Gets the current status of an order using its ID.
 
 ```json
 {
-  "id": "1",
-  "customerEmail": "test@example.com",
   "status": "Processed",
-  "items": [
-    { "id": 1, "name": "Nasi Goreng", "price": 20000 }
-  ]
 }
 ```
 

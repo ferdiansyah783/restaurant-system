@@ -71,13 +71,7 @@ Places a new order with the customer's email and selected item IDs.
 
 ```json
 {
-  "id": "1",
-  "customerEmail": "test@example.com",
-  "status": "Pending",
-  "items": [
-    { "id": 1, "name": "Nasi Goreng", "price": 20000 },
-    { "id": 2, "name": "Ayam Bakar", "price": 25000 }
-  ]
+  "orderId": "1",
 }
 ```
 

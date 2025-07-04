@@ -5,7 +5,7 @@ rename .env.example to .env
 docker-compose up --build
 
 ## Test API
-GET http://localhost:3000/menu 
+GET http://localhost:3000/order/menu 
 GET http://localhost:3000/order/1
 POST http://localhost:3000/order
 
@@ -32,7 +32,7 @@ http://localhost:3001
 
 ## 📦 API Endpoints
 
-### 📋 GET `/menu`
+### 📋 GET `/order/menu`
 
 Returns a list of available menu items.
 
@@ -49,7 +49,7 @@ Returns a list of available menu items.
 #### 🧪 How to Test:
 
 ```bash
-curl http://localhost:3001/menu
+curl http://localhost:3001/order/menu
 ```
 
 ---
@@ -174,7 +174,7 @@ RABBITMQ_URL=amqp://rabbitmq:5672
 
 | Feature     | How to Test                               |
 | ----------- | ----------------------------------------- |
-| Get Menu    | `GET /menu` via browser or `curl`         |
+| Get Menu    | `GET /order/menu` via browser or `curl`         |
 | Place Order | `POST /order` with valid email & item IDs |
 | Track Order | `GET /order/:id` with existing order ID   |
 
